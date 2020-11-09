@@ -1,0 +1,164 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400;1,700&family=Questrial&display=swap");
+
+$back-color: #f0f5f9;
+$base-color: #1e2022;
+$header-color: #52616b;
+$greyed-color: #9aa1a8;
+
+body {
+    background-color: $back-color;
+    color: $base-color;
+}
+
+div.container {
+    max-width: 880px;
+    margin: 48px auto;
+    padding: 0 40px;
+    font: 17px/25px "Merriweather", serif;
+}
+
+h1 {
+    font-size: 50px;
+    line-height: 56px;
+    margin: 35px 0 10px 0;
+    font-family: "Questrial", sans-serif;
+    font-weight: 400;
+    color: $header-color;
+}
+
+hr {
+    margin-bottom: 20px;
+    border-top: 1px solid $header-color;
+    margin: 0 0;
+}
+
+div.content {
+    clear: both;
+    margin: 0 30px;
+    line-height: 1.6;
+}
+
+div.navigation {
+    height: 25px;
+    margin: 40px 0px;
+}
+
+div.navigation ul {
+    margin: 0;
+    margin-left: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+div.navigation ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+a {
+    color: #54afa0;
+}
+a:hover {
+    color: #1d2c47;
+}
+
+.flex-wrapper {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.flex-wrapper > * {
+    flex: 1 100%;
+}
+
+/* Medium screens */
+@media all and (min-width: 600px) {
+    /* We tell both sidebars to share a row */
+    .aside {
+        flex: 0 auto;
+    }
+}
+
+/* Large screens */
+@media all and (min-width: 800px) {
+    /* We invert order of first sidebar and main
+     * And tell the main element to take twice as much width as the other two sidebars 
+     */
+    .main {
+        flex: 2 0px;
+    }
+    .aside-1 {
+        order: 1;
+    }
+    .main {
+        order: 2;
+        margin-left: 15px;
+    }
+    .aside-2 {
+        order: 3;
+    }
+    .footer {
+        order: 4;
+    }
+}
+.main p {
+    font: 15px/23px "Merriweather", serif;
+    margin: 0px;
+}
+
+div.job-card {
+    -moz-transition: all 0.4s ease-in;
+    -o-transition: all 0.4s ease-in;
+    -webkit-transition: all 0.4s ease-in;
+    margin: 40px 0px;
+
+    h4 {
+        font-size: 25px;
+        line-height: 20px;
+        margin: 0px 0 5px 0;
+        font-family: "Questrial", sans-serif;
+        font-weight: 400;
+        color: $header-color;
+    }
+
+    img {
+        transition: all 0.2s ease-in;
+        display: inline;
+    }
+}
+div.job-card:hover {
+    background-color: #d5dfe7;
+}
+.job-a {
+    color: $base-color;
+    text-decoration: none;
+    :hover {
+        color: $base-color;
+        h4 {
+            color: $header-color;
+        }
+        .grey-ital {
+            color: $greyed-color;
+        }
+    }
+}
+
+.grey-ital {
+    color: $greyed-color;
+    font-style: italic;
+    line-height: 0px;
+    font-size: smaller;
+}
+
+.not-found{
+    img{
+        display: flex;
+        margin: 0 auto;
+    }
+}
+.not-found-parent{
+    height: 70vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="not-found-parent">
+    <article class="not-found">
+        <img style="color:red;" src="{{resize_image(path="./sad.png", width=100, height=100,op="fit")}}" alt="Sad face">
+        <header>
+            <h1>404: Page not found</h1>
+        </header>
+        <div class="content">
+            Sorry, you appear to be lost.
+        </div>
+    </article>
+</div>
+
+{% endblock content %}

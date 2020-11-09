@@ -1,0 +1,14 @@
+<a class="job-a" href="{{lnk}}">
+    <div class="job-card">
+        <div class="flex-wrapper">
+            <div class="aside aside-1">
+                <img src="{{resize_image(path=imglnk, width=100, height=100,op="fit")}}" alt="{{imgalt}}">
+            </div>
+            <article class="main">
+                <h4>{{name}}</h4>
+                {% if date %} <span class="grey-ital">{{date}}</span>{% endif %}
+                {% if description %} <p>{{description}}</p>{% endif %}
+            </article>
+        </div>
+    </div>
+</a>
