@@ -3,7 +3,7 @@
 $back-color: #f0f5f9;
 $base-color: #1e2022;
 $header-color: #52616b;
-$greyed-color: #9aa1a8;
+$greyed-color: #646b73;
 
 body {
     background-color: $back-color;
@@ -56,10 +56,10 @@ div.navigation ul li {
 }
 
 a {
-    color: #54afa0;
+    color: #38746a;
 }
 a:hover {
-    color: #1d2c47;
+    color: #2769e4;
 }
 
 .flex-wrapper {
@@ -112,7 +112,7 @@ div.job-card {
     -webkit-transition: all 0.4s ease-in;
     margin: 40px 0px;
 
-    h4 {
+    h2 {
         font-size: 25px;
         line-height: 20px;
         margin: 0px 0 5px 0;
@@ -134,7 +134,7 @@ div.job-card:hover {
     text-decoration: none;
     :hover {
         color: $base-color;
-        h4 {
+        h2 {
             color: $header-color;
         }
         .grey-ital {
