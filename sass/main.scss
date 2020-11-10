@@ -13,7 +13,6 @@ body {
 div.container {
     max-width: 880px;
     margin: 48px auto;
-    padding: 0 40px;
     font: 17px/25px "Merriweather", serif;
 }
 
@@ -53,13 +52,18 @@ div.navigation ul {
 div.navigation ul li {
     display: inline;
     margin-right: 10px;
+    a {
+        text-decoration: underline;
+    }
 }
 
 a {
     color: #38746a;
+    text-decoration: none;
 }
 a:hover {
     color: #2769e4;
+    text-decoration: underline;
 }
 
 .flex-wrapper {
@@ -76,6 +80,9 @@ a:hover {
     /* We tell both sidebars to share a row */
     .aside {
         flex: 0 auto;
+    }
+    div.container {
+        padding: 0 40px;
     }
 }
 
@@ -131,7 +138,7 @@ div.job-card:hover {
 }
 .job-a {
     color: $base-color;
-    text-decoration: none;
+
     :hover {
         color: $base-color;
         h2 {
@@ -142,23 +149,55 @@ div.job-card:hover {
         }
     }
 }
+.job-a:hover{
+    text-decoration: none !important;
+}
 
 .grey-ital {
     color: $greyed-color;
     font-style: italic;
-    line-height: 0px;
     font-size: smaller;
 }
 
-.not-found{
-    img{
+.not-found {
+    img {
         display: flex;
         margin: 0 auto;
     }
 }
-.not-found-parent{
+.not-found-parent {
     height: 70vh;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.lst {
+    margin: 60px 60px 60px 0;
+}
+.lst-entry {
+    display: flex;
+    margin: 25px;
+    .lst-entry-txt {
+        margin: 0;
+        font-family: "Merriweather", serif;
+        font-size: 17px;
+        order: 2;
+        flex: 0 0 80%;
+        font-weight: 400;
+        line-height: 26px;
+        color: #52616b;
+
+        .lst-entry-summary {
+            margin: 0 25px 0 0;
+            padding: 0;
+            line-height: 25px;
+            color: $base-color;
+        }
+    }
+    .lst-entry-date {
+        order: 1;
+        flex: 0 0 20%;
+        margin-right: 10px;
+    }
 }
