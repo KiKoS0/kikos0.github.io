@@ -15,9 +15,6 @@
   {% for page in paginator.pages %}
   {{ page_macros::page_info(page=page) }}
   {% endfor %}
-  {% else %}
-  <h1>No blog entries available</h1>
-  {% endif %}
   <div class="pagination">
     {% if paginator.previous %}
     <a href="{{paginator.previous}}">« Back</a>
@@ -31,5 +28,9 @@
     <span>Next »</span>
     {% endif %}
   </div>
+  {% else %}
+  <h1>No blog entries available</h1>
+  {% endif %}
+
 </main>
 {% endblock content %}
