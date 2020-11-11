@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% import "macros/page.html" as page_macros %}
+
 
 {% block title %}
 {{section.title}}
@@ -9,26 +11,25 @@
   {{ section.title }}
 </h1> -->
 <main class="lst">
-  {% if section.pages %}
-
-
-  {% for page in section.pages %}
-  <article class="lst-entry">
-    <h1 class="lst-entry-txt">
-      <a href="{{ page.permalink | safe }}"> {{page.title}}</a>
-      {% if page.extra.summary %}<span class="lst-entry-summary"> — {{page.extra.summary}} </span>{% endif %}
-    </h1>
-    <div class="lst-entry-date grey-ital">
-      <span>
-        {{page.date | date(format="%d %B %Y")}}
-      </span>
-    </div>
-  </article>
+  {% if paginator.pages %}
+  {% for page in paginator.pages %}
+  {{ page_macros::page_info(page=page) }}
   {% endfor %}
   {% else %}
   <h1>No blog entries available</h1>
   {% endif %}
-
-
+  <div class="pagination">
+    {% if paginator.previous %}
+    <a href="{{paginator.previous}}">« Back</a>
+    {% else %}
+    <span>« Back</span>
+    {% endif %}
+    &emsp;—&emsp;<span>{{paginator.current_index}}</span>&emsp;—&emsp;
+    {% if paginator.next %}
+    <a href="{{paginator.next}}">Next »</a>
+    {% else %}
+    <span>Next »</span>
+    {% endif %}
+  </div>
 </main>
 {% endblock content %}

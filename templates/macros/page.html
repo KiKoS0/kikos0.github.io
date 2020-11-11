@@ -1,0 +1,13 @@
+{% macro page_info(page) %}
+<article class="lst-entry">
+    <h1 class="lst-entry-txt">
+        <a href="{{ page.permalink | safe }}"> {{page.title}}</a>
+        {% if page.extra.summary %}<span class="lst-entry-summary"> — {{page.extra.summary}} </span>{% endif %}
+    </h1>
+    <div class="lst-entry-date grey-ital">
+        <span>
+            {{page.date | date(format="%d %B %Y")}}
+        </span>
+    </div>
+</article>
+{% endmacro page_info %}

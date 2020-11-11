@@ -60,10 +60,10 @@ div.navigation ul li {
 a {
     color: #38746a;
     text-decoration: none;
-}
-a:hover {
-    color: #2769e4;
-    text-decoration: underline;
+    &:hover {
+        color: #2769e4;
+        text-decoration: underline;
+    }
 }
 
 .flex-wrapper {
@@ -132,15 +132,16 @@ div.job-card {
         transition: all 0.2s ease-in;
         display: inline;
     }
-}
-div.job-card:hover {
-    background-color: #d5dfe7;
+    &:hover {
+        background-color: #d5dfe7;
+    }
 }
 .job-a {
     color: $base-color;
 
-    :hover {
+    &:hover {
         color: $base-color;
+        text-decoration: none !important;
         h2 {
             color: $header-color;
         }
@@ -148,9 +149,6 @@ div.job-card:hover {
             color: $greyed-color;
         }
     }
-}
-.job-a:hover{
-    text-decoration: none !important;
 }
 
 .grey-ital {
@@ -200,4 +198,9 @@ div.job-card:hover {
         flex: 0 0 20%;
         margin-right: 10px;
     }
+}
+
+.pagination {
+    margin: 40px 0 0 0;
+    text-align: center;
 }
