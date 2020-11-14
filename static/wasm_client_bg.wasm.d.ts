@@ -2,9 +2,8 @@
 /* eslint-disable */
 export function greet(a: number, b: number): void;
 export function __wbg_raytracerruntime_free(a: number): void;
-export function raytracerruntime_data(a: number): number;
 export function raytracerruntime_render(a: number, b: number, c: number): number;
-export function raytracerruntime_new(): number;
+export function raytracerruntime_new(a: number): number;
 export function __wbg_renderingscene_free(a: number): void;
 export function __wbg_get_renderingscene_width(a: number): number;
 export function __wbg_set_renderingscene_width(a: number, b: number): void;
