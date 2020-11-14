@@ -18,19 +18,16 @@ export function child_entry_point(ptr: number): void;
 export class RayTracerRuntime {
   free(): void;
 /**
-* @returns {number}
-*/
-  data(): number;
-/**
 * @param {number} workers_num
 * @param {WorkerPool} pool
 * @returns {RenderingScene}
 */
   render(workers_num: number, pool: WorkerPool): RenderingScene;
 /**
+* @param {any} data
 * @returns {RayTracerRuntime}
 */
-  static new(): RayTracerRuntime;
+  static new(data: any): RayTracerRuntime;
 }
 /**
 */
@@ -80,9 +77,8 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
   readonly greet: (a: number, b: number) => void;
   readonly __wbg_raytracerruntime_free: (a: number) => void;
-  readonly raytracerruntime_data: (a: number) => number;
   readonly raytracerruntime_render: (a: number, b: number, c: number) => number;
-  readonly raytracerruntime_new: () => number;
+  readonly raytracerruntime_new: (a: number) => number;
   readonly __wbg_renderingscene_free: (a: number) => void;
   readonly __wbg_get_renderingscene_width: (a: number) => number;
   readonly __wbg_set_renderingscene_width: (a: number, b: number) => void;
