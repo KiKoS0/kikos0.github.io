@@ -2,7 +2,7 @@
 <article class="lst-entry">
     <h1 class="lst-entry-txt">
         <a href="{{ page.permalink | safe }}"> {{page.title}}</a>
-        {% if page.extra.summary %}<span class="lst-entry-summary"> — {{page.extra.summary}} </span>{% endif %}
+        {% if page.extra.summary %}<span class="lst-entry-summary"> — {{page.extra.summary | markdown(inline=true)}} </span>{% endif %}
     </h1>
     <div class="lst-entry-date grey-ital">
         <span>

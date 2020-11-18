@@ -16,14 +16,23 @@ div.container {
     margin: 48px auto;
     font: 17px/25px "Merriweather", serif;
 }
+h1, h2{
+    font-weight: 400;
+    color: $header-color;
+    font-family: "Questrial", sans-serif;
+
+}
 
 h1 {
     font-size: 50px;
     line-height: 56px;
     margin: 35px 0 10px 0;
-    font-family: "Questrial", sans-serif;
-    font-weight: 400;
-    color: $header-color;
+
+}
+h2{
+    margin: 25px 0 10px 0;
+    font-size: 40px;
+    line-height: 40px;
 }
 
 hr {
@@ -85,6 +94,12 @@ a {
     div.container {
         padding: 0 40px;
     }
+    img{
+        width: auto !important;
+    }
+}
+img{
+    width:100%;
 }
 
 /* Large screens */
@@ -204,4 +219,8 @@ div.job-card {
 .pagination {
     margin: 40px 0 0 0;
     text-align: center;
+}
+
+pre{
+    overflow-x: auto;
 }

@@ -4,11 +4,8 @@
 <head>
   <meta charset="utf-8">
   <title>{% block title %}{{ page.title }} {% endblock title %} | Daghmoura Riadh</title>
-  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"> -->
   <link rel="stylesheet"  href="{{ get_url(path='main.css', trailing_slash=false) }}" crossorigin>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Cross-Origin-Opener-Policy" content="same-origin">
-  <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
 </head>
 
 <body>
@@ -16,7 +13,7 @@
     <div class="container">
       <div class="navigation">
         <ul>
-          <li><a href="/">blog</a>
+          <li><a href="/blog/">blog</a>
           <li><a href="/research/">raytracer</a>
           <li><a href="/experience/">experience</a>
           <li><a href="/about/">about</a>
