@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Raytracer wasm support  | Daghmoura Riadh</title>
+  <link rel="stylesheet"  href="https:&#x2F;&#x2F;kikos.tech&#x2F;main.css" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li><a href="/blog/">blog</a>
+          <li><a href="/ray-tracer/">raytracer</a>
+          <li><a href="/experience/">experience</a>
+          <li><a href="/about/">about</a>
+        </ul>
+      </div>
+      
+<div class="content">
+  <h1 class="title">
+    Raytracer wasm support
+  </h1>
+  <p class="date grey-ital"><strong>18 November 2020</strong></p>
+  <p><p>Lately, i got interested in ray tracing and i owe that to all the posts i see
+everyday on <a href="https://news.ycombinator.com">Hacker News</a> about how easy 
+to build a simple ray tracer from scratch. So to get a better understanding 
+of the subject, i hacked a <a href="https://github.com/KiKoS0/ray-tracer">toy version</a> 
+in a couple days. </p>
+<p>It was nothing fancy just a camera and a spheres populated 
+environment but i implemented it in rust so it was a great opportunity to make it 
+run in a browser. I also decided to write it about since the process wasn't as 
+straightforward as i initially thought.</p>
+<h2 id="concurrency">Concurrency</h2>
+<p>Concurrency is achieved by simply dividing the image into sections and let each
+processor handle the pixels assigned to it. </p>
+<p><img src="https://kikos.tech/blog/wasm-raytracer/bands.png" alt="pixel bands image" /></p>
+<p>This is done using <a href="https://github.com/rayon-rs/rayon">Rayon</a>
+with code as simple as this:</p>
+<pre style="background-color:#31333d;">
+<code><span style="color:#ffffffc4;">    </span><span style="color:#a3cbe3;">let</span><span style="color:#ffffffc4;"> bands: </span><span style="color:#e7e7e7;">Vec</span><span style="color:#ffffffc4;">&lt;(</span><span style="color:#a3cbe3;">usize</span><span style="color:#ffffffc4;">, </span><span style="color:#db7c6d;">&amp;</span><span style="color:#dbbb3d;">mut</span><span style="color:#ffffffc4;"> [Color&lt;</span><span style="color:#a3cbe3;">u8</span><span style="color:#ffffffc4;">&gt;])&gt; </span><span style="color:#db7c6d;">=</span><span style="color:#ffffffc4;">
+        pixels.</span><span style="color:#db7c6d;">chunks_mut</span><span style="color:#ffffffc4;">(image_width).</span><span style="color:#db7c6d;">enumerate</span><span style="color:#ffffffc4;">().</span><span style="color:#db7c6d;">collect</span><span style="color:#ffffffc4;">();
+    bands.</span><span style="color:#db7c6d;">into_par_iter</span><span style="color:#ffffffc4;">().</span><span style="color:#db7c6d;">for_each</span><span style="color:#ffffffc4;">(|(</span><span style="color:#ffffff;">index</span><span style="color:#ffffffc4;">, </span><span style="color:#ffffff;">band</span><span style="color:#ffffffc4;">)| {
+        </span><span style="color:#db7c6d;">render</span><span style="color:#ffffffc4;">(band, (image_width,</span><span style="color:#db7c6d;">1</span><span style="color:#ffffffc4;">), index, data, world);
+    });
+</span></code></pre>
+<p>Normally Rayon will spawn N system threads (typically N equals the number of logical cores)
+in a ThreadPool to use, but in a browser environment you don't have the luxury of accessing low level 
+APIs such as pthreads or Windows Threads. Instead browsers support parallelism via Web Workers which are
+objects that runs a named JavaScript file in the background and communicates through a messaging system
+(no shared memory between them).</p>
+<p>Combining Web Workers with 
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer">SharedArrayBuffer</a>
+allows WebAssembly threads to share mutable data that leads to a threaded environment much similar
+to native platforms.</p>
+<p>Thanks to Alex Crichton <a href="https://github.com/rustwasm/wasm-bindgen/blob/master/examples/raytrace-parallel/src/pool.rs">module</a>,
+i didn't have to deal with creating the Web Workers from rust myself and it made executing rayon
+as simple as feeding his web worker pool implementation to the rayon pool builder. </p>
+<pre style="background-color:#31333d;">
+<code><span style="color:#ffffffc4;">    </span><span style="color:#a3cbe3;">let</span><span style="color:#ffffffc4;"> thread_pool </span><span style="color:#db7c6d;">= </span><span style="color:#ffffffc4;">rayon::ThreadPoolBuilder::new()
+        .</span><span style="color:#db7c6d;">num_threads</span><span style="color:#ffffffc4;">(workers_num)
+        .</span><span style="color:#db7c6d;">spawn_handler</span><span style="color:#ffffffc4;">(|</span><span style="color:#ffffff;">thread</span><span style="color:#ffffffc4;">| </span><span style="color:#e7e7e7;">Ok</span><span style="color:#ffffffc4;">(pool.</span><span style="color:#db7c6d;">run</span><span style="color:#ffffffc4;">(|| thread.</span><span style="color:#db7c6d;">run</span><span style="color:#ffffffc4;">()).</span><span style="color:#db7c6d;">unwrap</span><span style="color:#ffffffc4;">()))
+        .</span><span style="color:#db7c6d;">build</span><span style="color:#ffffffc4;">()
+        .</span><span style="color:#db7c6d;">unwrap</span><span style="color:#ffffffc4;">();
+</span></code></pre><h2 id="random-number-generation">Random Number Generation</h2>
+<p>I heavily used the <a href="https://github.com/rust-random/rand">rand</a> crate for RNG and while
+it supports wasm by enabling the <code>stdweb</code> feature in your <code>cargo.toml</code>, it didn't
+work as expected in a multi-threaded environment. The rand crate uses the 
+<a href="https://github.com/rust-random/getrandom">getrandom</a> crate internally which obviously 
+is responsible of retrieving random data. getrandom had a function with this signature:</p>
+<pre style="background-color:#31333d;">
+<code><span style="color:#ffffffc4;">    </span><span style="color:#a3cbe3;">fn </span><span style="color:#a2ba43;">get_random_values</span><span style="color:#ffffffc4;">(</span><span style="color:#ffffff;">me</span><span style="color:#ffffffc4;">: </span><span style="color:#db7c6d;">&amp;</span><span style="color:#ffffffc4;">BrowserCrypto, </span><span style="color:#ffffff;">buf</span><span style="color:#ffffffc4;">: </span><span style="color:#db7c6d;">&amp;</span><span style="color:#dbbb3d;">mut</span><span style="color:#ffffffc4;"> [</span><span style="color:#a3cbe3;">u8</span><span style="color:#ffffffc4;">]) -&gt; </span><span style="color:#e7e7e7;">Result</span><span style="color:#ffffffc4;">&lt;(), JsValue&gt;
+</span></code></pre>
+<p>The <code>buf</code>  parameter is the output buffer and apparently the <code>&amp;mut [u8]</code> type did not act well
+with the browser's SharedArrayBuffer, well since it's supposed to be shared between threads.
+So it had to be changed to a memory region allocated by Javascript instead, it got finally fixed by this 
+<a href="https://github.com/rust-random/getrandom/pull/165">PR</a> later. </p>
+<p>Fortunately, compiling the rand crate with the master branch of getrandom didn't break anything
+and nothing more than the <code>cargo.toml</code> file needed to change (<a href="https://github.com/KiKoS0/rand">Fork</a>).</p>
+<h2 id="building-the-project">Building the project</h2>
+<p>Rust standard library needs to be recompiled with these flags
+<code>RUSTFLAGS='-C target-feature=+atomics,+bulk-memory'</code> to ship with precompiled threading support enabled and it's also 
+recommended to run cargo with the <a href="https://github.com/rust-lang/wg-cargo-std-aware"><code>std</code>  Aware Cargo</a> feature to build the the standard library with these custom settings:</p>
+<pre style="background-color:#31333d;">
+<code><span style="color:#ffffffc4;">    </span><span style="font-weight:bold;color:#a3cbe3;">RUSTFLAGS</span><span style="color:#db7c6d;">=</span><span style="font-weight:bold;color:#dbbb3d;">&#39;</span><span style="color:#ffffffc4;">-C target-feature=+atomics,+bulk-memory</span><span style="font-weight:bold;color:#dbbb3d;">&#39; </span><span style="font-weight:bold;color:#a3cbe3;">cargo</span><span style="color:#ffffffc4;"> build</span><span style="color:#ffffff;"> --target</span><span style="color:#ffffffc4;"> wasm32-unknown-unknown</span><span style="color:#ffffff;"> --release -Z</span><span style="color:#ffffffc4;"> build-std=panic_abort,std
+</span></code></pre>
+<p>And finally running <code>wasm-bindgen</code> with the <code>--target no-modules</code> flag is mandatory to run code
+with multi-threading.</p>
+<pre style="background-color:#31333d;">
+<code><span style="color:#ffffffc4;">    </span><span style="font-weight:bold;color:#a3cbe3;">wasm-bindgen</span><span style="color:#ffffffc4;"> wasm_client.wasm</span><span style="color:#ffffff;"> --target</span><span style="color:#ffffffc4;"> no-modules
+</span></code></pre>
+<p>You could also run the compiled wasm file through  <code>wasm-opt</code>
+to optimize even more (for size or speed):</p>
+<pre style="background-color:#31333d;">
+<code><span style="color:#ffffffc4;">    </span><span style="font-weight:bold;color:#a3cbe3;">wasm-opt</span><span style="color:#ffffffc4;"> wasm_client_bg.wasm</span><span style="color:#ffffff;"> -o</span><span style="color:#ffffffc4;"> wasm_client_bg.wasm</span><span style="color:#ffffff;"> -O3 --enable-mutable-globals --detect-features
+</span></code></pre></p>
+</div>
+
+    </div>
+  </section>
+</body>
+
+</html>
