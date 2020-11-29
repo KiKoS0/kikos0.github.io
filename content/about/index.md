@@ -25,5 +25,5 @@ Yes, my online nickname is KiKoS.
 
 # Website
 ---
-This website's source code is on [github](https://github.com/KiKoS0) and is just consisted of bunch of [markdown](https://en.wikipedia.org/wiki/Markdown) 
+This website's source code is on [github](https://github.com/KiKoS0/kikos0.github.io) and is just consisted of bunch of [markdown](https://en.wikipedia.org/wiki/Markdown) 
 files statically built with [Zola](https://www.getzola.org/).
