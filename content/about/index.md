@@ -3,25 +3,20 @@ title = "About me"
 +++
 # About Me
 ---
-Hi, my name is Daghmoura Riadh and i spend half my time passionately learning to be a better
-developer and getting my hands dirty trying new technologies and the other half attending
-lectures, listening to boring stuff and complaining about how bad they are taught.
+Hi, my name is Daghmoura Riadh and I spend an awful lot of time developing and breaking things in order to improve as a developer.
 
-I'm interested in web development (mostly backend stuff), DevOps, computer graphics, reverse engineering 
-software and a lot of other stuff.
+I'm interested in web development (mostly backend), DevOps, computer graphics, reverse engineering and a lot of other stuff.
 
-I'm currently in the middle of my university studies at [ISSATSO](http://www.issatso.rnu.tn/) and looking for
-an end of studies internship/project of couple months (4-6) starting from Feb-2021, so if you want to contact me you 
-can find me:
+I'm a freshly graduated software engineer from [ISSATSO](http://www.issatso.rnu.tn/) who is looking for new opportunities.
+So, if you want to get in touch with me, you may find me on:
+- [Linkedin](https://www.linkedin.com/in/riadh-daghmoura-043077185/)
 - By sending me an [email](mailto:dag.riadh@gmail.com)
-- Private message me on [Linkedin](https://www.linkedin.com/in/riadh-daghmoura-043077185/)
 
-And despite not being a real direct communication channel you can also find me on: 
+Also, I'm on: 
 - [Stackoverflow](https://stackoverflow.com/users/9437824/kikos)
 - [Github](https://github.com/KiKoS0)
 
 Yes, my online nickname is KiKoS.
-
 
 # Website
 ---
