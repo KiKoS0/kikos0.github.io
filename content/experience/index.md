@@ -6,8 +6,7 @@ title = "Experience"
 
 ---
 
-Professionally, so far I have been involved in a couple of summer
-internships and freelancing projects:
+Professionally, I have a few years of experience as a Software Engineer and I'm currently [@Ovice](https://ovice.in/):
 
 {{ jobcard(
 
