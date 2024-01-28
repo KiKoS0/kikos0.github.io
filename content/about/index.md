@@ -3,8 +3,7 @@ title = "About me"
 +++
 # About Me
 ---
-My name is Daghmoura Riadh. I am a Software Engineer from Tunisia. I work currently [@Ovice](https://ovice.in/) where
-we are re-designing Remote Work.
+My name is Daghmoura Riadh. I am a Software Engineer from Tunisia. I currently work  [@Candidate.ly](https://candidate.ly).
 
 I graduated from [ISSATSO](http://www.issatso.rnu.tn/) with a software engineering degree a few years ago.
 I am interested in web development (mostly backend), DevOps, computer graphics, reverse engineering and a lot of other stuff.

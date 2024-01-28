@@ -6,17 +6,28 @@ title = "Experience"
 
 ---
 
-Professionally, I have a few years of experience as a Software Engineer and I'm currently [@Ovice](https://ovice.in/):
+Professionally, I have a few years of experience as a Software Engineer and I'm currently [@Candidate.ly](https://candidate.ly):
+
 
 {{ jobcard(
 
-    name="oVice Inc.",
+    name="Candidate.ly",
+    description=" ",
+    imglnk="./experience/candidately.jpg",
+    imgalt="Candidately",
+    date="Nov-2023 – Present",
+    lnk="https://candidate.ly",
+    tags=["Phoenix","Elixir","React","PostgreSQL"]) 
+}}
+{{ jobcard(
+
+    name="ovice Inc.",
     description="Collaborate on migrating the platform's core API from a legacy Laravel codebase to a REST Phoenix API running as a
     distributed Elixir cluster. This is part of the company's strategic goal to have more maintainable and scalable APIs to
     support the product's global expansion.",
     imglnk="./experience/ovice.png",
-    imgalt="oVice INc",
-    date="Nov-2021 – Present",
+    imgalt="ovice",
+    date="Nov-2021 – Nov-2023",
     lnk="https://ovice.com/",
     tags=["Phoenix","Elixir","React","PostgreSQL"]) 
 }}
