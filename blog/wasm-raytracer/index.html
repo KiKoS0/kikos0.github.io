@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Raytracer wasm support  | Daghmoura Riadh</title>
+  <link rel="stylesheet"  href="https://kikos.dev/main.css" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li><a href="/blog/">blog</a>
+          <li><a href="/ray-tracer/">raytracer</a>
+          <li><a href="/experience/">experience</a>
+          <li><a href="/about/">about</a>
+        </ul>
+      </div>
+      
+<div class="content">
+  <h1 class="title">
+    Raytracer wasm support
+  </h1>
+  <p class="date grey-ital"><strong>18 November 2020</strong></p>
+  <p><p>Lately, i got interested in ray tracing and i owe that to all the posts i see
+everyday on <a href="https://news.ycombinator.com">Hacker News</a> about how easy 
+to build a simple ray tracer from scratch. So to get a better understanding 
+of the subject, i hacked a <a href="https://github.com/KiKoS0/ray-tracer">toy version</a> 
+in a couple days. </p>
+<p>It was nothing fancy just a camera and a spheres populated 
+environment but i implemented it in rust so it was a great opportunity to make it 
+run in a browser. I also decided to write it about since the process wasn't as 
+straightforward as i initially thought.</p>
+<h2 id="concurrency">Concurrency</h2>
+<p>Concurrency is achieved by simply dividing the image into sections and let each
+processor handle the pixels assigned to it. </p>
+<p><img src="https://kikos.dev/blog/wasm-raytracer/bands.png" alt="pixel bands image" /></p>
+<p>This is done using <a href="https://github.com/rayon-rs/rayon">Rayon</a>
+with code as simple as this:</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">    let bands: Vec&lt;(usize, &amp;mut [Color&lt;u8&gt;])&gt; =
+        pixels.chunks_mut(image_width).enumerate().collect();
+    bands.into_par_iter().for_each(|(index, band)| {
+        render(band, (image_width,1), index, data, world);
+    });
+</code></pre>
+<p>Normally Rayon will spawn N system threads (typically N equals the number of logical cores)
+in a ThreadPool to use, but in a browser environment you don't have the luxury of accessing low level 
+APIs such as pthreads or Windows Threads. Instead browsers support parallelism via Web Workers which are
+objects that runs a named JavaScript file in the background and communicates through a messaging system
+(no shared memory between them).</p>
+<p>Combining Web Workers with 
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer">SharedArrayBuffer</a>
+allows WebAssembly threads to share mutable data that leads to a threaded environment much similar
+to native platforms.</p>
+<p>Thanks to Alex Crichton <a href="https://github.com/rustwasm/wasm-bindgen/blob/master/examples/raytrace-parallel/src/pool.rs">module</a>,
+i didn't have to deal with creating the Web Workers from rust myself and it made executing rayon
+as simple as feeding his web worker pool implementation to the rayon pool builder. </p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">    let thread_pool = rayon::ThreadPoolBuilder::new()
+        .num_threads(workers_num)
+        .spawn_handler(|thread| Ok(pool.run(|| thread.run()).unwrap()))
+        .build()
+        .unwrap();
+</code></pre>
+<h2 id="random-number-generation">Random Number Generation</h2>
+<p>I heavily used the <a href="https://github.com/rust-random/rand">rand</a> crate for RNG and while
+it supports wasm by enabling the <code>stdweb</code> feature in your <code>cargo.toml</code>, it didn't
+work as expected in a multi-threaded environment. The rand crate uses the 
+<a href="https://github.com/rust-random/getrandom">getrandom</a> crate internally which obviously 
+is responsible of retrieving random data. getrandom had a function with this signature:</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">    fn get_random_values(me: &amp;BrowserCrypto, buf: &amp;mut [u8]) -&gt; Result&lt;(), JsValue&gt;
+</code></pre>
+<p>The <code>buf</code>  parameter is the output buffer and apparently the <code>&amp;mut [u8]</code> type did not act well
+with the browser's SharedArrayBuffer, well since it's supposed to be shared between threads.
+So it had to be changed to a memory region allocated by Javascript instead, it got finally fixed by this 
+<a href="https://github.com/rust-random/getrandom/pull/165">PR</a> later. </p>
+<p>Fortunately, compiling the rand crate with the master branch of getrandom didn't break anything
+and nothing more than the <code>cargo.toml</code> file needed to change (<a href="https://github.com/KiKoS0/rand">Fork</a>).</p>
+<h2 id="building-the-project">Building the project</h2>
+<p>Rust standard library needs to be recompiled with these flags
+<code>RUSTFLAGS='-C target-feature=+atomics,+bulk-memory'</code> to ship with precompiled threading support enabled and it's also 
+recommended to run cargo with the <a href="https://github.com/rust-lang/wg-cargo-std-aware"><code>std</code>  Aware Cargo</a> feature to build the the standard library with these custom settings:</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">    RUSTFLAGS=&#x27;-C target-feature=+atomics,+bulk-memory&#x27; cargo build --target wasm32-unknown-unknown --release -Z build-std=panic_abort,std
+</code></pre>
+<p>And finally running <code>wasm-bindgen</code> with the <code>--target no-modules</code> flag is mandatory to run code
+with multi-threading.</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">    wasm-bindgen wasm_client.wasm --target no-modules
+</code></pre>
+<p>You could also run the compiled wasm file through  <code>wasm-opt</code>
+to optimize even more (for size or speed):</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">    wasm-opt wasm_client_bg.wasm -o wasm_client_bg.wasm -O3 --enable-mutable-globals --detect-features
+</code></pre>
+</p>
+</div>
+
+    </div>
+  </section>
+</body>
+
+</html>

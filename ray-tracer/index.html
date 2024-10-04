@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>
+Raytracer
+ | Daghmoura Riadh</title>
+  <link rel="stylesheet"  href="https://kikos.dev/main.css" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+</head>
+
+<body>
+  <section class="section">
+    <div class="container">
+      <div class="navigation">
+        <ul>
+          <li><a href="/blog/">blog</a>
+          <li><a href="/ray-tracer/">raytracer</a>
+          <li><a href="/experience/">experience</a>
+          <li><a href="/about/">about</a>
+        </ul>
+      </div>
+      
+<h1 class="title">
+    Ray tracer
+</h1>
+
+<noscript>This page contains webassembly and javascript content, please enable javascript in your browser.</noscript>
+<div id="jsoneditor" style="width: 400px; height: 400px;"></div>
+<div class="div" style="text-align:center;">
+    <button disabled id='render'>Loading wasm...</button>
+</div>
+<div id='timing'>
+    Render duration:
+    <p id='timing-val'></p>
+
+    <canvas id='canvas'></canvas>
+    <link href="/jsoneditor/jsoneditor.min.css" rel="stylesheet" type="text/css">
+    <script src="/jsoneditor/jsoneditor.min.js"></script>
+    <script src="/wasm_client.js"></script>
+    <script src="/main_wasm.js"></script>
+
+</div>
+
+    </div>
+  </section>
+</body>
+
+</html>
