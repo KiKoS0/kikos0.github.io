@@ -1,25 +1,27 @@
 +++
 title = "About me"
 +++
-# About Me
----
-My name is Daghmoura Riadh. I am a Software Engineer from Tunisia. I currently work  [@Candidate.ly](https://candidate.ly).
 
-I graduated from [ISSATSO](http://www.issatso.rnu.tn/) with a software engineering degree a few years ago.
-I am interested in web development (mostly backend), DevOps, computer graphics, reverse engineering and a lot of other stuff.
+# About Me
+
+---
+I am Riadh Daghmoura, a software engineer from Tunisia who loves writing simple code and appreciates those who do as well. I currently work at [@Candidate.ly](https://candidate.ly).
+
+I graduated from [ISSATSO](http://www.issatso.rnu.tn/) with a degree in software engineering a few years ago.
+I am interested in web development (mainly backend, though I’ve been doing a lot of frontend recently), DevOps, computer graphics, reverse engineering, and much more.
 
 If you want to get in touch with me, you may find me on [Linkedin](https://www.linkedin.com/in/riadh-daghmoura-043077185/)
 or send me an [email](mailto:dag.riadh@gmail.com)
 
-Also, I'm on: 
-- [Stackoverflow](https://stackoverflow.com/users/9437824/kikos)
-- [Github](https://github.com/KiKoS0)
+I'm also on:
+* [Stackoverflow](https://stackoverflow.com/users/9437824/kikos)
+* [Github](https://github.com/KiKoS0)
 
-I write in this blog the interesting experiences I go through as a software engineer and able to share.
+In this blog, I share the most interesting experiences I’ve had as a software engineer that I’m able to discuss.
 
-Yes, my online nickname is KiKoS.
+Yes, I go by the online nickname KiKoS, in case you come across it somewhere.
 
 # Website
+
 ---
-This website's source code is on [github](https://github.com/KiKoS0/kikos0.github.io) and is just consisted of bunch of [markdown](https://en.wikipedia.org/wiki/Markdown) 
-files statically built with [Zola](https://www.getzola.org/).
+The source code for this website is available on [GitHub]((https://github.com/KiKoS0/kikos0.github.io)). It's simply a collection of Markdown files, statically built using [Zola]((https://www.getzola.org/)).
