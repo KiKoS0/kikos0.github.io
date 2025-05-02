@@ -5,7 +5,7 @@ title = "About me"
 # About Me
 
 ---
-I am Riadh Daghmoura, a software engineer from Tunisia who loves writing simple code and appreciates those who do as well. I currently work at [@Candidate.ly](https://candidate.ly).
+I'm Riadh Daghmoura, a software engineer from Tunisia who loves writing simple code and appreciates those who do as well. Currently at [Inngest](https://www.inngest.com/).
 
 I graduated from [ISSATSO](http://www.issatso.rnu.tn/) with a degree in software engineering a few years ago.
 I am interested in web development (mainly backend, though I’ve been doing a lot of frontend recently), DevOps, computer graphics, reverse engineering, and much more.

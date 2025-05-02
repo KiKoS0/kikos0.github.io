@@ -8,20 +8,29 @@ title = "Experience"
 
 Professionally, I have a few years of experience as a Software Engineer and I'm currently [@Candidate.ly](https://candidate.ly):
 
+{{ jobcard(
 
+    name="Inngest",
+    description=" ",
+    imglnk="./experience/inngest.png",
+    imgalt="Inngest",
+    date="Apr-2025 – Present",
+    lnk="https://www.inngest.com/",
+    tags=["Go","k8s","Kafka","Redis","Postgres"]) 
+}}
 {{ jobcard(
 
     name="Candidate.ly",
     description=" ",
     imglnk="./experience/candidately.jpg",
     imgalt="Candidately",
-    date="Nov-2023 – Present",
+    date="Nov-2023 – Apr-2025",
     lnk="https://candidate.ly",
-    tags=["Phoenix","Elixir","React","PostgreSQL"]) 
+    tags=["Phoenix","Elixir","React","Postgres"]) 
 }}
 {{ jobcard(
 
-    name="ovice Inc.",
+    name="ovice",
     description="Collaborate on migrating the platform's core API from a legacy Laravel codebase to a REST Phoenix API running as a
     distributed Elixir cluster. This is part of the company's strategic goal to have more maintainable and scalable APIs to
     support the product's global expansion.",
@@ -29,7 +38,7 @@ Professionally, I have a few years of experience as a Software Engineer and I'm 
     imgalt="ovice",
     date="Nov-2021 – Nov-2023",
     lnk="https://ovice.com/",
-    tags=["Phoenix","Elixir","React","PostgreSQL"]) 
+    tags=["Phoenix","Elixir","React","Postgres"]) 
 }}
 {{ jobcard(
 
@@ -53,8 +62,6 @@ Professionally, I have a few years of experience as a Software Engineer and I'm 
     tags=["Android",".Net core","Mssql"]) 
 }}
 
-
-    
 
 # Personal projects
 
